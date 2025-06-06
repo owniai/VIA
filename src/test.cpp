@@ -1,0 +1,145 @@
+#include <iostream>
+#include <cstdint>
+#include <vector>
+#include <array>
+#include <chrono>
+#include <memory>
+#include "core.hpp"
+#include "VIAClient.hpp"
+#include "VIAServer.hpp"
+#include "VIA_CClient.hpp"
+#include "VIA_CServer.hpp"
+
+int main(int argc, char const *argv[])
+{
+    // VIA_CClient client;
+    // VIA_CServer server;
+    // printInfoVIA_C();
+    // for (int i = 0; i < 5; i++)
+    // {
+    //     server.SetupDatabase();
+    //     std::vector<RlevSampleQ1> ksk1, ksk2;
+    //     for (int i = 0; i < 11; i++)
+    //     {
+    //         ksk1.emplace_back(RlevSampleQ1(GADGET_L_CONV));
+    //         ksk2.emplace_back(RlevSampleQ1(GADGET_L_CONV));
+    //     }
+    //     RingSwitchingKey rsk(GADGET_RSK_LC);
+    //     RlevSampleQ1 toRGSW(GADGET_L_CONV);
+
+    //     client.Setup(ksk1, ksk2, rsk, toRGSW);
+
+    //     LweSampleQ1 qu[LOG_ROW*GADGET1_LC + GADGET2_LC*(LOG_COL + 2)];
+    //     client.Query(20471, qu);
+
+    //     RlweSampleQ2 ans;
+    //     server.Answer(ksk1, ksk2, rsk, toRGSW, qu, ans);
+
+    //     int64_t* result = static_cast<int64_t*>(std::aligned_alloc(64, DEGREE2 * sizeof(uint64_t)));
+    //     client.Recover(ans, result);
+    // }
+
+    // static VIA_CClient client;
+    // static VIA_CServer server;
+    // std::vector<RlevSampleQ1> ksk1, ksk2;
+    // RingSwitchingKey rsk(GADGET_RSK_LC);
+    // RlevSampleQ1 toRGSW(GADGET_L_CONV);
+    // uint64_t index[2] = {20471, 2};
+    // LweSampleQ1 qu[LOG_ROW*GADGET1_LC + GADGET2_LC*(LOG_COL + 11)];
+    // LweSampleQ2 ans;
+    // int64_t result;
+
+    // printInfoVIA_C();
+    // for (int i = 0; i < 3; i++)
+    // {
+    //     std::cout << "| \u2756" << " Round " << i + 1 << ": computation time" << std::endl;
+    //     server.SetupDatabase();
+    //     for (int i = 0; i < 11; i++)
+    //     {
+    //         ksk1.emplace_back(RlevSampleQ1(GADGET_L_CONV));
+    //         ksk2.emplace_back(RlevSampleQ1(GADGET_L_CONV));
+    //     }
+
+
+    //     client.Setup(ksk1, ksk2, rsk, toRGSW);
+    //     client.Query_Extraction(index, qu);
+
+    //     server.Answer_Extraction(ksk1, ksk2, rsk, toRGSW, qu, ans);
+
+    //     client.Recover_Extraction(ans, result);
+    // }
+
+
+    // static VIAClient client;
+    // static VIAServer server;
+
+    // printInfoVIA();
+
+    // for (int k = 0; k<2; k++)
+    // { 
+    //     std::cout << "| \u2756" << " Round " << k + 1 << ": computation time" << std::endl;
+    //     server.SetupDatabase();
+
+    //     uint64_t index = 20471;
+    //     RlweSampleQ1 c_rot[8];
+    //     RingSwitchingKey rsk(GADGET_RSK_L);
+    //     std::vector<RgswSampleQ1> C_ctrl;
+    //     for (uint64_t i = 0; i < LOG_ROW - 3; i++)
+    //     {
+    //         C_ctrl.emplace_back(RgswSampleQ1(GADGET1_L, GADGET1_L));
+    //     }
+    //     std::vector<RgswSampleQ2> C_sel;
+    //     for (uint64_t i = 0; i < LOG_COL - 3; i++)
+    //     {
+    //         C_sel.emplace_back(RgswSampleQ2(GADGET2_L_1, GADGET2_L_2));
+    //     }
+
+    //     client.Query(index, c_rot, rsk, C_ctrl, C_sel);
+
+    //     RlweSampleQ2 ans[8];
+    //     server.Answer(c_rot, rsk, C_ctrl, C_sel, ans);
+
+    //     int64_t* result[8];
+    //     for (uint64_t i = 0; i < 8; i++)
+    //     {
+    //         result[i] = static_cast<int64_t*>(std::aligned_alloc(64, DEGREE2 * sizeof(uint64_t)));
+    //     }
+    //     client.Recover(ans, result);
+    // }
+
+
+    static VIAClient client;
+    static VIAServer server;
+    uint64_t index[2] = {20471, 2};
+    RlweSampleQ1 c_rot[8];
+    RingSwitchingKey rsk(GADGET_RSK_L);
+    std::vector<RgswSampleQ1> C_ctrl;
+    for (uint64_t i = 0; i < LOG_ROW - 3; i++)
+    {
+        C_ctrl.emplace_back(RgswSampleQ1(GADGET1_L, GADGET1_L));
+    }
+    std::vector<RgswSampleQ2> C_sel;
+    for (uint64_t i = 0; i < LOG_COL - 3; i++)
+    {
+        C_sel.emplace_back(RgswSampleQ2(GADGET2_L_1, GADGET2_L_2));
+    }
+    LweSampleQ2 ans[8];
+    int64_t result[8];
+
+    printInfoVIA();
+
+    for (int k = 0; k<3; k++)
+    { 
+        std::cout << "| \u2756" << " Round " << k + 1 << ": computation time" << std::endl;
+        server.SetupDatabase();
+
+
+        client.Query_Extraction(index, c_rot, rsk, C_ctrl, C_sel);
+
+        server.Answer_Extraction(c_rot, rsk, C_ctrl, C_sel, ans);
+
+        client.Recover_Extraction(ans, result);
+    }
+
+    return 0;
+}
