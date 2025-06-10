@@ -101,10 +101,10 @@ void ring_project(const uint64_t idx, const uint64_t* src, uint64_t* dst);
 void modSwitch(const uint64_t modulus_src, const uint64_t modulus_dst, uint64_t* Src, uint64_t* Dst, const uint64_t size);
 
 // printInfoVIA
-void printInfoVIA();
+void printInfoVIA(uint64_t IsBlindedExtraction);
 
 // printInfoVIA
-void printInfoVIA_C();
+void printInfoVIA_C(uint64_t IsBlindedExtraction);
 
 // AVX512 multiply Constant
 void mulC_Deg1(const uint64_t val, uint64_t* Src, uint64_t* Dst);
