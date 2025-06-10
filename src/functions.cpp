@@ -287,7 +287,7 @@ void modSwitch(const uint64_t modulus_src, const uint64_t modulus_dst, uint64_t*
 }
 
 // printInfoVIA
-void printInfoVIA()
+void printInfoVIA(uint64_t IsBlindedExtraction)
 {
     std::cout << "\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510" << std::endl;
 	std::cout << "\u2502             Test for VIA Protocol             \u2502" << std::endl;
@@ -308,20 +308,8 @@ void printInfoVIA()
     std::cout << "\u2502   \u25BA" << " Modulus P: " << MODULUS_P << std::endl;
 
     std::cout << "\u2502 LWE parameters(degree):" << std::endl;
-    std::cout << "\u2502   \u25BA" << " Degree of LWE1: " << DEGREE1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Degree of LWE2: " << DEGREE2 << std::endl;
     std::cout << "\u2502   \u25BA" << " Degree of RLWE1: " << DEGREE1 << std::endl;
     std::cout << "\u2502   \u25BA" << " Degree of RLWE2: " << DEGREE2 << std::endl;
-
-    std::cout << "\u2502 LWE parameters(secret key generation):" << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus KGEN1: " << MODULUS_KGEN1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus KGEN2: " << MODULUS_KGEN2 << std::endl;
-
-    std::cout << "\u2502 LWE parameters(error distribution):" << std::endl;
-    std::cout << "\u2502   \u25BA" << " Standard deviation of LWE1: " << STDDEVLWE1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Standard deviation of LWE2: " << STDDEVLWE2 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Standard deviation of error1: " << STDDEV1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Standard deviation of error2: " << STDDEV2 << std::endl;
 
     std::cout << "\u2502 Gadget parameters:" << std::endl;
     std::cout << "\u2502   \u25BA" << " Gadget1_L: " << GADGET1_L << std::endl;
@@ -336,7 +324,7 @@ void printInfoVIA()
 
 
 	double OnlineUpload = static_cast<double>(2*GADGET1_L*(LOG_ROW-3)+8)*sizePolyDeg1Q1 + static_cast<double>(GADGET_RSK_L)*sizePolyDeg1Q2 + static_cast<double>((GADGET2_L_1+GADGET2_L_2)*(LOG_COL-3)*sizePolyDeg2Q2);
-	double OnlineDownload = 8*(sizePolyDeg2Q3 + sizePolyDeg2Q4 + sizePolyDeg2Q2);
+	double OnlineDownload = (IsBlindedExtraction == 1) ? 8*sizePolyDeg2Q3 + LOG_MODULUS_Q4/1024.0 : 8*(sizePolyDeg2Q3 + sizePolyDeg2Q4);
 	std::cout << "\u2502 Communication overhead:" << std::endl;
 	std::cout << "\u2502   \u25BA" << " Offline upload: " << 0 << std::endl;
 	std::cout << "\u2502   \u25BA" << " Offline download: " << 0 << std::endl;
@@ -346,59 +334,51 @@ void printInfoVIA()
 
 }
 
-// printInfoVIA
-void printInfoVIA_C()
+// printInfoVIA_C
+void printInfoVIA_C(uint64_t IsBlindedExtraction)
 {
     std::cout << "\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510" << std::endl;
-	std::cout << "\u2502             Test for VIA Protocol             \u2502" << std::endl;
+	std::cout << "\u2502            Test for VIA-C Protocol            \u2502" << std::endl;
     std::cout << "\u251C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518" << std::endl;
 	std::cout << "\u2502 Database parameters:" << std::endl;
     std::cout << "\u2502   \u25BA" << " Length of Database(N) : " << ROW*COL*DEGREE1/DEGREE2 << std::endl;
     std::cout << "\u2502   \u25BA" << " Row: " << ROW << std::endl;
     std::cout << "\u2502   \u25BA" << " Col: " << COL << std::endl;
-	std::cout << "\u2502   \u25BA" << " Database size: " << ((ROW*COL*DEGREE1*LOG_MODULUS_P) >> 23) << " MB" << std::endl;
+	std::cout << "\u2502   \u25BA" << " Database size: " << ((ROW*COL*DEGREE1*LOG_MODULUS_P) >> 24) << " MB" << std::endl;
 	std::cout << "\u2502   " << std::endl;
     std::cout << "\u2502 LWE parameters(modulus):" << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus Q1: " << MODULUS_Q1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus Q1_1: " << MODULUS_Q1_1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus Q1_2: " << MODULUS_Q1_2 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus Q2: " << MODULUS_Q2 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus Q3: " << MODULUS_Q3 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus Q4: " << MODULUS_Q4 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus P: " << MODULUS_P << std::endl;
+    std::cout << "\u2502   \u25BA" << " Modulus Q1: " << MODULUS_Q1C << std::endl;
+    std::cout << "\u2502   \u25BA" << " Modulus Q1_1: " << MODULUS_Q1_1C << std::endl;
+    std::cout << "\u2502   \u25BA" << " Modulus Q1_2: " << MODULUS_Q1_2C << std::endl;
+    std::cout << "\u2502   \u25BA" << " Modulus Q2: " << MODULUS_Q2C << std::endl;
+    std::cout << "\u2502   \u25BA" << " Modulus Q3: " << MODULUS_Q3C << std::endl;
+    std::cout << "\u2502   \u25BA" << " Modulus Q4: " << MODULUS_Q4C << std::endl;
+    std::cout << "\u2502   \u25BA" << " Modulus P: " << MODULUS_PC << std::endl;
 
     std::cout << "\u2502 LWE parameters(degree):" << std::endl;
-    std::cout << "\u2502   \u25BA" << " Degree of LWE1: " << DEGREE1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Degree of LWE2: " << DEGREE2 << std::endl;
+    std::cout << "\u2502   \u25BA" << " Degree of LWE: " << DEGREE1 << std::endl;
     std::cout << "\u2502   \u25BA" << " Degree of RLWE1: " << DEGREE1 << std::endl;
     std::cout << "\u2502   \u25BA" << " Degree of RLWE2: " << DEGREE2 << std::endl;
 
-    std::cout << "\u2502 LWE parameters(secret key generation):" << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus KGEN1: " << MODULUS_KGEN1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Modulus KGEN2: " << MODULUS_KGEN2 << std::endl;
-
-    std::cout << "\u2502 LWE parameters(error distribution):" << std::endl;
-    std::cout << "\u2502   \u25BA" << " Standard deviation of LWE1: " << STDDEVLWE1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Standard deviation of LWE2: " << STDDEVLWE2 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Standard deviation of error1: " << STDDEV1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Standard deviation of error2: " << STDDEV2 << std::endl;
-
     std::cout << "\u2502 Gadget parameters:" << std::endl;
-    std::cout << "\u2502   \u25BA" << " Gadget1_L: " << GADGET1_L << std::endl;
-    std::cout << "\u2502   \u25BA" << " Gadget1_Base: " << GADGET1_BASE << std::endl;
-    std::cout << "\u2502   \u25BA" << " Gadget2_L_1: " << GADGET2_L_1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Gadget2_Base_1: " << GADGET2_BASE_1 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Gadget2_L_2: " << GADGET2_L_2 << std::endl;
-    std::cout << "\u2502   \u25BA" << " Gadget2_Base_2: " << GADGET2_BASE_2 << std::endl;
+	std::cout << "\u2502   \u25BA" << " Gadget_L_Conv: " << GADGET_L_CONV << std::endl;
+    std::cout << "\u2502   \u25BA" << " Gadget_Base_Conv: " << GADGET_BASE_CONV << std::endl;
+    std::cout << "\u2502   \u25BA" << " Gadget1_L: " << GADGET1_LC << std::endl;
+    std::cout << "\u2502   \u25BA" << " Gadget1_Base: " << GADGET1_BASEC << std::endl;
+    std::cout << "\u2502   \u25BA" << " Gadget2_L: " << GADGET2_LC << std::endl;
+    std::cout << "\u2502   \u25BA" << " Gadget2_Base: " << GADGET2_BASEC << std::endl;
     std::cout << "\u2502   \u25BA" << " Gadget_RSK_L: " << GADGET_RSK_L << std::endl;
     std::cout << "\u2502   \u25BA" << " Gadget_RSK_Base: " << GADGET_RSK_BASE << std::endl;
     std::cout << "\u251C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500" << std::endl;
 
 
-	double OnlineUpload = static_cast<double>(2*GADGET1_L*(LOG_ROW-3)+8)*sizePolyDeg1Q1 + static_cast<double>(GADGET_RSK_L)*sizePolyDeg1Q2 + static_cast<double>((GADGET2_L_1+GADGET2_L_2)*(LOG_COL-3)*sizePolyDeg2Q2);
-	double OnlineDownload = 8*(sizePolyDeg2Q3 + sizePolyDeg2Q4 + sizePolyDeg2Q2);
+
+	double OfflineUpload = 22*2*GADGET_L_CONV*sizePolyDeg1Q1C + GADGET_L_CONV*sizePolyDeg1Q1C + GADGET_RSK_LC*sizePolyDeg2Q3C;
+
+	double OnlineUpload = (IsBlindedExtraction == 1) ? GADGET1_LC*(LOG_ROW + LOG_COL + 11)*CEIL_LOG_Q1C / 8192.0 : GADGET1_LC*(LOG_ROW + LOG_COL + 2)*CEIL_LOG_Q1C / 8192.0;
+	double OnlineDownload = (IsBlindedExtraction == 1) ?  (DEGREE2 * CEIL_LOG_Q3C + LOG_MODULUS_Q4C) / 8192.0 : DEGREE2 * (CEIL_LOG_Q3C + LOG_MODULUS_Q4C) /8192.0;
 	std::cout << "\u2502 Communication overhead:" << std::endl;
-	std::cout << "\u2502   \u25BA" << " Offline upload: " << 0 << std::endl;
+	std::cout << "\u2502   \u25BA" << " Offline upload: " << OfflineUpload / 1024.0 << " MiB" << std::endl;
 	std::cout << "\u2502   \u25BA" << " Offline download: " << 0 << std::endl;
 	std::cout << "\u2502   \u25BA" << " Online upload: " << OnlineUpload <<  " KiB" <<std::endl;
 	std::cout << "\u2502   \u25BA" << " Online download: " << OnlineDownload << " KiB" << std::endl;
