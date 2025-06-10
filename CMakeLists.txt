@@ -14,8 +14,6 @@ add_executable(VIA_PIR ${SOURCES})
 target_compile_options(VIA_PIR PRIVATE -mavx512dq -mavx512ifma)
 
 
-# 指定头文件目录
 target_include_directories(VIA_PIR PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# 指定库文件
 target_link_libraries(VIA_PIR PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/libhexl.a)
