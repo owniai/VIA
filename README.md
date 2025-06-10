@@ -24,8 +24,7 @@ The performance evaluation offers the following test variants:
 - `VIA-C`  
 - `VIA-C with Blinded Extraction`  
 
-**Execution Notes:**  
-When running tests:  
+**Execution Notes:**  When running tests:  
 1. Select either VIA or VIA-C  
 2. Choose whether to enable Blinded Extraction  
 3. Specify the number of test iterations  
