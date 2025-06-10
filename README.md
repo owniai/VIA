@@ -32,7 +32,7 @@ The performance evaluation offers the following test variants:
 #### Memory Handling for Large Databases
 Due to memory constraints:  
 - **VIA**: For databases > 4GB, only 4GB database of memory will be allocated. The First Dimension operations will simulate memory usage for the full database.  
-- **VIA-C**: For databases >2GB, only 2GB database of memory will be allocated. First Dimension operations will simulate memory usage for the full database.  
+- **VIA-C**: For databases > 2GB, only 2GB database of memory will be allocated. First Dimension operations will simulate memory usage for the full database.  
 
 
 
