@@ -25,7 +25,7 @@ int main()
     {
         static VIA_CClient client;
         static VIA_CServer server;
-        printInfoVIA_C();
+        printInfoVIA_C(IsBlindedExtraction);
         server.SetupDatabase();
         if (IsBlindedExtraction == 1)
         {
@@ -83,7 +83,7 @@ int main()
     {
         static VIAClient client;
         static VIAServer server;
-        printInfoVIA();
+        printInfoVIA(IsBlindedExtraction);
         server.SetupDatabase();
         if (IsBlindedExtraction == 1)
         {
