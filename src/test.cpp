@@ -103,8 +103,6 @@ int main()
             LweSampleQ2 ans[8];
             int64_t result[8];
 
-            printInfoVIA();
-
             for (int k = 0; k<ExecutionCount; k++)
             { 
                 std::cout << "| \u2756" << " Round " << k + 1 << ": computation time" << std::endl;
