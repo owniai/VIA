@@ -8,7 +8,7 @@ class VIA_CServer
 {
 public:
 // constructor
-	VIA_CServer() : nttQ1_1C(DEGREE1, MODULUS_Q1_1), nttQ1_2C(DEGREE1, MODULUS_Q1_2), nttQ2CDeg1(DEGREE1, MODULUS_Q2), nttQ3C(DEGREE2, MODULUS_Q3), nttQ3CDeg1(DEGREE1, MODULUS_Q3C)
+	VIA_CServer() : nttQ1_1C(DEGREE1, MODULUS_Q1_1C), nttQ1_2C(DEGREE1, MODULUS_Q1_2C), nttQ2CDeg1(DEGREE1, MODULUS_Q2C), nttQ3C(DEGREE2, MODULUS_Q3C), nttQ3CDeg1(DEGREE1, MODULUS_Q3C)
     {
         FirstDimVec.resize(ROW);
         SecondDimVec.resize(COL);
@@ -121,7 +121,7 @@ public:
                 CRT_C(temp_message1, temp_rlweSampleQ1.rlweMask1, temp_rlweSampleQ1.rlweMask2, DEGREE1);
                 halfExternalProdQ1(CEIL_LOG_Q1C, GADGET_L_CONV, LOG_GADGET_BASE_CONV, ksk1[j], temp_message1, temp_rlweSampleQ1_1);
                 halfExternalProdQ1(CEIL_LOG_Q1C, GADGET_L_CONV, LOG_GADGET_BASE_CONV, ksk2[j], temp_message1, temp_rlweSampleQ1_2);
-                intel::hexl::EltwiseAddMod(temp_rlweSampleQ1.rlweMask1, temp_rlweSampleQ1_1.rlweMask1, temp_rlweSampleQ1_2.rlweMask1, DEGREE1, MODULUS_Q1_1);
+                intel::hexl::EltwiseAddMod(temp_rlweSampleQ1.rlweMask1, temp_rlweSampleQ1_1.rlweMask1, temp_rlweSampleQ1_2.rlweMask1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(temp_rlweSampleQ1.rlweVal1, temp_rlweSampleQ1_1.rlweVal1, temp_rlweSampleQ1_2.rlweVal1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(temp_rlweSampleQ1.rlweVal1, temp_rlweSampleQ1.rlweVal1, temp_rlweSampleQ1_2.rlweVal1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(temp_rlweSampleQ1.rlweMask2, temp_rlweSampleQ1_1.rlweMask2, temp_rlweSampleQ1_2.rlweMask2, DEGREE1, MODULUS_Q1_2C);
@@ -159,7 +159,7 @@ public:
                 CRT_C(temp_message1, temp_rlweSampleQ1.rlweMask1, temp_rlweSampleQ1.rlweMask2, DEGREE1);
                 halfExternalProdQ1(CEIL_LOG_Q1C, GADGET_L_CONV, LOG_GADGET_BASE_CONV, ksk1[10], temp_message1, temp_rlweSampleQ1_1);
                 halfExternalProdQ1(CEIL_LOG_Q1C, GADGET_L_CONV, LOG_GADGET_BASE_CONV, ksk2[10], temp_message1, temp_rlweSampleQ1_2);
-                intel::hexl::EltwiseAddMod(C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, temp_rlweSampleQ1_1.rlweMask1, temp_rlweSampleQ1_2.rlweMask1, DEGREE1, MODULUS_Q1_1);
+                intel::hexl::EltwiseAddMod(C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, temp_rlweSampleQ1_1.rlweMask1, temp_rlweSampleQ1_2.rlweMask1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, temp_rlweSampleQ1_1.rlweVal1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, temp_rlweSampleQ1_2.rlweVal1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(C_selQ1[m].msgRlev.rlweSamples[n].rlweMask2, temp_rlweSampleQ1_1.rlweMask2, temp_rlweSampleQ1_2.rlweMask2, DEGREE1, MODULUS_Q1_2C);
@@ -375,7 +375,7 @@ public:
                 CRT_C(temp_message1, temp_rlweSampleQ1.rlweMask1, temp_rlweSampleQ1.rlweMask2, DEGREE1);
                 halfExternalProdQ1(CEIL_LOG_Q1C, GADGET_L_CONV, LOG_GADGET_BASE_CONV, ksk1[j], temp_message1, temp_rlweSampleQ1_1);
                 halfExternalProdQ1(CEIL_LOG_Q1C, GADGET_L_CONV, LOG_GADGET_BASE_CONV, ksk2[j], temp_message1, temp_rlweSampleQ1_2);
-                intel::hexl::EltwiseAddMod(temp_rlweSampleQ1.rlweMask1, temp_rlweSampleQ1_1.rlweMask1, temp_rlweSampleQ1_2.rlweMask1, DEGREE1, MODULUS_Q1_1);
+                intel::hexl::EltwiseAddMod(temp_rlweSampleQ1.rlweMask1, temp_rlweSampleQ1_1.rlweMask1, temp_rlweSampleQ1_2.rlweMask1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(temp_rlweSampleQ1.rlweVal1, temp_rlweSampleQ1_1.rlweVal1, temp_rlweSampleQ1_2.rlweVal1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(temp_rlweSampleQ1.rlweVal1, temp_rlweSampleQ1.rlweVal1, temp_rlweSampleQ1_2.rlweVal1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(temp_rlweSampleQ1.rlweMask2, temp_rlweSampleQ1_1.rlweMask2, temp_rlweSampleQ1_2.rlweMask2, DEGREE1, MODULUS_Q1_2C);
@@ -413,7 +413,7 @@ public:
                 CRT_C(temp_message1, temp_rlweSampleQ1.rlweMask1, temp_rlweSampleQ1.rlweMask2, DEGREE1);
                 halfExternalProdQ1(CEIL_LOG_Q1C, GADGET_L_CONV, LOG_GADGET_BASE_CONV, ksk1[10], temp_message1, temp_rlweSampleQ1_1);
                 halfExternalProdQ1(CEIL_LOG_Q1C, GADGET_L_CONV, LOG_GADGET_BASE_CONV, ksk2[10], temp_message1, temp_rlweSampleQ1_2);
-                intel::hexl::EltwiseAddMod(C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, temp_rlweSampleQ1_1.rlweMask1, temp_rlweSampleQ1_2.rlweMask1, DEGREE1, MODULUS_Q1_1);
+                intel::hexl::EltwiseAddMod(C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, temp_rlweSampleQ1_1.rlweMask1, temp_rlweSampleQ1_2.rlweMask1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, temp_rlweSampleQ1_1.rlweVal1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, C_selQ1[m].msgRlev.rlweSamples[n].rlweMask1, temp_rlweSampleQ1_2.rlweVal1, DEGREE1, MODULUS_Q1_1C);
                 intel::hexl::EltwiseAddMod(C_selQ1[m].msgRlev.rlweSamples[n].rlweMask2, temp_rlweSampleQ1_1.rlweMask2, temp_rlweSampleQ1_2.rlweMask2, DEGREE1, MODULUS_Q1_2C);
@@ -696,11 +696,11 @@ public:
     // CMux for Q2
     void CMuxQ2Deg1(const uint64_t log_modulus, const uint64_t gadget_l_1, const uint64_t gadget_l_2, const uint64_t log_gadget_base_1, const uint64_t log_gadget_base_2, RgswSampleQ2Deg1& rgswSample, RlweSampleQ2Deg1& rlweSample0, RlweSampleQ2Deg1& rlweSample1, RlweSampleQ2Deg1& result)
     {
-        intel::hexl::EltwiseSubMod(temp_rlweSampleQ2Deg1.rlweMask, rlweSample1.rlweMask, rlweSample0.rlweMask, DEGREE2, MODULUS_Q2);
-        intel::hexl::EltwiseSubMod(temp_rlweSampleQ2Deg1.rlweVal, rlweSample1.rlweVal, rlweSample0.rlweVal, DEGREE2, MODULUS_Q2);
+        intel::hexl::EltwiseSubMod(temp_rlweSampleQ2Deg1.rlweMask, rlweSample1.rlweMask, rlweSample0.rlweMask, DEGREE2, MODULUS_Q2C);
+        intel::hexl::EltwiseSubMod(temp_rlweSampleQ2Deg1.rlweVal, rlweSample1.rlweVal, rlweSample0.rlweVal, DEGREE2, MODULUS_Q2C);
         externalProdQ2Deg1(log_modulus, gadget_l_1, gadget_l_2, log_gadget_base_1, log_gadget_base_2, rgswSample, temp_rlweSampleQ2Deg1, result);
-        intel::hexl::EltwiseAddMod(result.rlweMask, result.rlweMask, rlweSample0.rlweMask, DEGREE2, MODULUS_Q2);
-        intel::hexl::EltwiseAddMod(result.rlweVal, result.rlweVal, rlweSample0.rlweVal, DEGREE2, MODULUS_Q2);
+        intel::hexl::EltwiseAddMod(result.rlweMask, result.rlweMask, rlweSample0.rlweMask, DEGREE2, MODULUS_Q2C);
+        intel::hexl::EltwiseAddMod(result.rlweVal, result.rlweVal, rlweSample0.rlweVal, DEGREE2, MODULUS_Q2C);
     }
 
 	std::vector<uint64_t*> database;

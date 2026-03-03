@@ -142,7 +142,7 @@ constexpr static const int64_t HALF_MODULUS_Q1C = (MODULUS_Q1C - 1) >> 1;
 constexpr static const int64_t HALF_MODULUS_Q1_1C = (MODULUS_Q1_1C - 1) >> 1;
 constexpr static const int64_t HALF_MODULUS_Q1_2C = (MODULUS_Q1_2C - 1) >> 1;
 constexpr static const int64_t HALF_MODULUS_Q2C = (MODULUS_Q2 - 1) >> 1;
-constexpr static const int64_t HALF_MODULUS_Q4C = MODULUS_Q4 >> 1;
+constexpr static const int64_t HALF_MODULUS_Q4C = MODULUS_Q4C >> 1;
 
 constexpr static const uint64_t CRT_COEFFICIENT1 = (MODULUS_Q1_2 * INV1) % MODULUS_Q1;
 constexpr static const uint64_t CRT_COEFFICIENT2 = (MODULUS_Q1_1 * INV2) % MODULUS_Q1;

@@ -155,16 +155,16 @@ public:
         intel::hexl::EltwiseMultMod(fhe.temp_prod1, ans.rlweMask, fhe.secretKey2_ntt, DEGREE2, MODULUS_Q3C, 1);
         nttQ3C.ComputeInverse(fhe.temp_prod1, fhe.temp_prod1, 1, 1);
         modSwitch(MODULUS_Q3C, MODULUS_Q4C, fhe.temp_prod1, fhe.temp_prod1, DEGREE2);
-        intel::hexl::EltwiseSubMod(fhe.temp_message1, ans.rlweVal, fhe.temp_prod1, DEGREE2, MODULUS_Q4);
+        intel::hexl::EltwiseSubMod(fhe.temp_message1, ans.rlweVal, fhe.temp_prod1, DEGREE2, MODULUS_Q4C);
         for (int j = 0; j < DEGREE2; j++)
         {
-            if (fhe.temp_message1[j] < HALF_MODULUS_Q4)
+            if (fhe.temp_message1[j] < HALF_MODULUS_Q4C)
             {
                 result[j] = static_cast<int64_t>(round(static_cast<double>(fhe.temp_message1[j]/static_cast<double>(DELTAC_FINAL))));
             }
             else
             {
-                result[j] = static_cast<int64_t>(round(static_cast<double>(fhe.temp_message1[j] - MODULUS_Q4)/static_cast<double>(DELTAC_FINAL)));
+                result[j] = static_cast<int64_t>(round(static_cast<double>(fhe.temp_message1[j] - MODULUS_Q4C)/static_cast<double>(DELTAC_FINAL)));
             }
         }
         auto end = std::chrono::high_resolution_clock::now();
