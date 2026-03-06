@@ -23,8 +23,8 @@ constexpr std::array<T, N> make_array()
 }
 
 // parameters for database size
-constexpr static const uint64_t LOG_ROW = 9;
-constexpr static const uint64_t LOG_COL = 15;
+constexpr static const uint64_t LOG_ROW = 8;
+constexpr static const uint64_t LOG_COL = 13;
 
 // parameters for modulus
 constexpr static const uint64_t MODULUS_Q1_1 = 268369921;
@@ -62,6 +62,9 @@ constexpr static const uint64_t MODULUS_Q3C = 8380417;
 constexpr static const uint64_t CEIL_LOG_Q3C = 23;
 constexpr static const uint64_t LOG_MODULUS_Q4C = 12;
 constexpr static const uint64_t MODULUS_Q4C = UINT64_C(1) << LOG_MODULUS_Q4C;
+
+constexpr static const uint64_t LOG_MODULUS_PC = 8;
+constexpr static const uint64_t MODULUS_PC = 1 << LOG_MODULUS_PC;
 
 // parameters for LWE degree
 constexpr static const uint64_t DEGREE1 = 2048;
